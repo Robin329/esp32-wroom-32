@@ -1,6 +1,6 @@
 - [1. esp32-wroom-32 devkit v1](#1-esp32-wroom-32-devkit-v1)
-  - [1.2 examples supports](#12-examples-supports)
-  - [1.3 Hardware doc](#13-hardware-doc)
+  - [1.1. examples supports](#11-examples-supports)
+  - [1.2. Hardware doc](#12-hardware-doc)
 - [2. Developing With ESP-IDF](#2-developing-with-esp-idf)
   - [2.1. Setting Up ESP-IDF](#21-setting-up-esp-idf)
     - [2.1.1. Non-GitHub forks](#211-non-github-forks)
@@ -19,7 +19,7 @@
 # 1. esp32-wroom-32 devkit v1
 Some example examples of esp32-wroom-32 are based on FreeRTOS.
 
-## 1.2 examples supports
+## 1.1. examples supports
 |name                 |          support             |                             position                                    |
 |:--------------------| :---------------------------:| :-------------------------------------------------------------- |
 |1.hello_world        | ![alt text][supported]       |     [1_hello_world](./1_hello_world/main/hello_world_main.c)    |
@@ -32,7 +32,7 @@ Some example examples of esp32-wroom-32 are based on FreeRTOS.
 [preview]: https://img.shields.io/badge/-%E9%A2%84%E8%A7%88-orange "preview"
 [not support]: https://img.shields.io/badge/not%20supported-orange "not support"
 
-## 1.3 Hardware doc
+## 1.2. Hardware doc
 [esp32-wroom-32-devkit-v1](https://github.com/Robin329/esp32-doc.git)
 
 
