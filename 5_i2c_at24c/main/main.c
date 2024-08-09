@@ -1,6 +1,7 @@
 /*
 Driver for reading and writing data to 24Cxx external I2C EEPROMs.
 */
+#include <stdint.h>
 #include <stdio.h>
 #include <inttypes.h>
 #include <string.h>
@@ -73,7 +74,7 @@ void app_main()
 	// clear first block
 	for (int i = 0; i < 256; i++) {
 		uint16_t data_addr = i;
-		uint8_t data = i / 100;
+		uint8_t data = i + 1;
 		WLOG("write data[%d]:%#x", i, data);
 		ret = WriteRom(&dev, data_addr, data);
 		if (ret != ESP_OK) {

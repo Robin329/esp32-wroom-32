@@ -5,11 +5,11 @@
 #undef WROOM_TAG
 #define WROOM_TAG "at24cxx-i2c"
 
-#define I2C_MASTER_SCL_IO 19 /*!< GPIO number used for I2C master clock */
-#define I2C_MASTER_SDA_IO 18 /*!< GPIO number used for I2C master data  */
+#define I2C_MASTER_SCL_IO 22 /*!< GPIO number used for I2C master clock */
+#define I2C_MASTER_SDA_IO 21 /*!< GPIO number used for I2C master data  */
 #define I2C_MASTER_NUM                                                         \
 	0 /*!< I2C master i2c port number, the number of i2c peripheral interfaces available will depend on the chip */
-#define I2C_MASTER_FREQ_HZ 400000 /*!< I2C master clock frequency */
+#define I2C_MASTER_FREQ_HZ 100000 /*!< I2C master clock frequency */
 #define I2C_MASTER_TX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_RX_BUF_DISABLE 0 /*!< I2C master doesn't need buffer */
 #define I2C_MASTER_TIMEOUT_MS 1000
@@ -63,28 +63,22 @@ static esp_err_t i2c_master_init(void)
 
 void app_main(void)
 {
-	uint8_t data[10];
+	uint8_t data;
 	ESP_ERROR_CHECK(i2c_master_init());
 	WLOG("I2C initialized successfully!\n");
-	ESP_ERROR_CHECK(at24cxx_register_read(AT24CXX_REG_DEVICE_ID, data, 1));
-	WLOG("at24cxx read device info:%#x\n", data[0]);
+	ESP_ERROR_CHECK(at24cxx_register_read(AT24CXX_REG_DEVICE_ID, &data, 1));
+	WLOG("at24cxx read device info:%#x\n", data);
 
-	// ESP_ERROR_CHECK(at24cxx_register_write_byte(AT24CXX_REG_DATA0, 1));
-	ESP_ERROR_CHECK(at24cxx_register_read(0x00, data, 1));
-	WLOG("at24cxx read data0:%#x\n", data[0]);
-
-	// ESP_ERROR_CHECK(at24cxx_register_write_byte(AT24CXX_REG_DATA0, 2));
-
+	ESP_ERROR_CHECK(at24cxx_register_read(0x00, &data, 1));
+	WLOG("at24cxx read data0:%#x\n", data);
+	WLOG("-----------------------------------\n");
 	for (uint8_t i = 0; i < 127; i++) {
 		ESP_ERROR_CHECK(at24cxx_register_write_byte(i, i));
-		// WLOG("at24cxx write data%d:%#x\n", i, data[0]);
+		ESP_ERROR_CHECK(at24cxx_register_read(i, &data, 1));
+		// WLOG("at24cxx write data%d:%#x\n", i, i);
+		// WLOG("at24cxx read data%d:%#x\n", i, data[0]);
 	}
-
-	for (int count = 0; count < 256; count++) {
-		ESP_ERROR_CHECK(at24cxx_register_read(count, data, 1));
-		WLOG("at24cxx read data%d:%#x\n", count, data[0]);
-	}
-
+	WLOG("-----------------------------------\n");
 	ESP_ERROR_CHECK(i2c_driver_delete(I2C_MASTER_NUM));
 	WLOG("I2C de-initialized successfully");
 }
